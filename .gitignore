@@ -1,0 +1,42 @@
+# Godot-specific files and folders
+
+# Diretórios de exportação e cache do Godot
+.export/
+.import/
+.cache/
+
+# Arquivo de configurações locais do editor
+.editor/
+
+# Arquivos temporários do sistema operacional
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*.swo
+
+# Arquivos de build (export)
+*.exe
+*.dll
+*.pdb
+*.so
+*.dylib
+
+# Arquivos do Godot 4 para backups locais
+*.backup
+
+# Arquivos de projeto do editor
+*.godot~
+
+# Configurações de workspace específicas da IDE/editor (opcional)
+.vscode/
+.idea/
+*.code-workspace
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
