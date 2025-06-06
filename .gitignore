@@ -1,42 +1,61 @@
-# Godot-specific files and folders
+# Compiled class files
+*.class
 
-# Diretórios de exportação e cache do Godot
-.export/
-.import/
-.cache/
-
-# Arquivo de configurações locais do editor
-.editor/
-
-# Arquivos temporários do sistema operacional
-*.tmp
-*.temp
+# Generated files
 *.log
+*.tmp
 *.bak
 *.swp
-*.swo
+*.DS_Store
 
-# Arquivos de build (export)
-*.exe
-*.dll
-*.pdb
-*.so
-*.dylib
-
-# Arquivos do Godot 4 para backups locais
-*.backup
-
-# Arquivos de projeto do editor
-*.godot~
-
-# Configurações de workspace específicas da IDE/editor (opcional)
-.vscode/
+# IntelliJ / Android Studio
 .idea/
-*.code-workspace
+*.iml
+.gradle/
+build/
+out/
 
-# MacOS
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Android
+local.properties
+*.apk
+*.ap_
+*.dex
+*.aar
+*.so
+*.jar
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# LibGDX asset pipeline
+*.atlas
+*.gdx-*
+
+# OS-specific
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
 
 # Windows
 Thumbs.db
-desktop.ini
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Packaging
+*.zip
+*.tar.gz
+*.rar
+
+# Logs
+*.log
