@@ -10,41 +10,21 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
-    private SpriteBatch batch;
-    private Texture image;
-
-    private float x, y;
+    private GameScreen gameScreen;
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        image = new Texture("cohete_off.png");
-        x = 140;
-        y = 210;
+        gameScreen = new GameScreen();
     }
 
     @Override
     public void render() {
-        handleInput();
-        float scale = 0.5f;
-        float width = image.getWidth() * scale;
-        float height = image.getHeight() * scale;
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
-        batch.draw(image, x, y, width, height);
-        batch.end();
-    }
-
-    private void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) x -= 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) x += 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) y += 200 * Gdx.graphics.getDeltaTime();
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) y -= 200 * Gdx.graphics.getDeltaTime();
+        gameScreen.update(Gdx.graphics.getDeltaTime());
+        gameScreen.render();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        image.dispose();
+        gameScreen.dispose();
     }
 }
