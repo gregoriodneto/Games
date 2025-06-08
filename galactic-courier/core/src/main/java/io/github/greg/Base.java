@@ -47,6 +47,14 @@ public class Base {
         return scale;
     }
 
+    public float getWidth() {
+        return image.getWidth();
+    }
+
+    public float getHeight() {
+        return image.getHeight();
+    }
+
     public void setX(float x) {
         this.x = x;
     }
