@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Base {
-    private SpriteBatch batch;
     private Texture image;
     protected float x;
     protected float y;
@@ -14,7 +13,6 @@ public class Base {
     public Base() {}
 
     public Base(String imagePath, float x, float y, float scale) {
-        batch = new SpriteBatch();
         image = new Texture(imagePath);
         this.x = x;
         this.y = y;
@@ -23,15 +21,11 @@ public class Base {
 
     public void update(float delta) {}
 
-    public void render() {
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
-        batch.begin();
+    public void render(SpriteBatch batch) {
         batch.draw(image, x, y, image.getWidth() * scale, image.getHeight() * scale);
-        batch.end();
     }
 
     public void dispose() {
-        batch.dispose();
         image.dispose();
     }
 
