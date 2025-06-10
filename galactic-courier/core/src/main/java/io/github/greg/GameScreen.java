@@ -1,51 +1,89 @@
 package io.github.greg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameScreen {
     private SpriteBatch batch;
     private Ship ship;
-    private SpaceStations spaceStations;
+    private List<SpaceStations> stations;
+
+    private float screenWidth;
+    private float screenHeight;
 
     public GameScreen() {
-        float screenWidth = Gdx.graphics.getWidth();
-        float screenHeight = Gdx.graphics.getHeight();
-        float scale = 0.5f;
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        float scale = 0.3f;
 
         batch = new SpriteBatch();
 
-        ship = new Ship("cohete_off.png", screenWidth, screenHeight, scale);
+        ship = new Ship("cohete_off.png", screenWidth, screenHeight, scale, ShipState.NO_LOAD);
         ship.setX((screenWidth - ship.getWidth() * scale) / 2);
         ship.setY((screenHeight - ship.getHeight() * scale) / 2);
 
-        float randomX = MathUtils.random(0, screenWidth);
-        float randomY = MathUtils.random(0, screenHeight);
-        scale = 2.5f;
-        spaceStations = new SpaceStations("icon_teleporter.png", randomX, randomY, scale);
-        spaceStations.setX(randomX - spaceStations.getWidth());
-        spaceStations.setY(randomY - spaceStations.getHeight());
+        stations = new ArrayList<>();
+
+        createStations(2, 2.5f);
+    }
+
+    private void createStations(int quantity, float scale) {
+        for (int i = 0; i < quantity; i++) {
+            float stationWidth = new Texture("icon_teleporter.png").getWidth() * scale;
+            float stationHeight = new Texture("icon_teleporter.png").getHeight() * scale;
+
+            float x = MathUtils.random(0, screenWidth - stationWidth);
+            float y = MathUtils.random(0, screenHeight - stationHeight);
+
+            stations.add(new SpaceStations("icon_teleporter.png", x, y, scale));
+        }
     }
 
     public void update(float delta) {
         ship.update(delta);
-        spaceStations.update(delta);
+        for (SpaceStations station : stations) {
+            station.update(delta);
+
+            if (
+                station.isLoadItem() &&
+                ship.getBounds().overlaps(station.getBounds()) &&
+                    Gdx.input.isKeyJustPressed(Input.Keys.ENTER)
+            ) {
+                if (ship.getState() == ShipState.NO_LOAD) {
+                    ship.setState(ShipState.WITH_LOAD);
+                    ship.setPoints(ship.getPoints() + 1);
+                    station.setLoadItem(false);
+                }
+                System.out.println("Status: " + ship.getState() + ", Pontos: " + ship.getPoints());
+            }
+        }
     }
 
     public void render() {
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
         ship.render(batch);
-        spaceStations.render(batch);
+
+        for (SpaceStations station : stations) {
+            station.render(batch);
+        }
+
         batch.end();
     }
 
     public void dispose() {
         batch.dispose();
         ship.dispose();
-        spaceStations.dispose();
+
+        for (SpaceStations station : stations) {
+            station.dispose();
+        }
     }
 }

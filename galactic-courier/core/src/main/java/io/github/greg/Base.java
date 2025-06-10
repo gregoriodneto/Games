@@ -2,6 +2,7 @@ package io.github.greg;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Base {
@@ -23,6 +24,10 @@ public class Base {
 
     public void render(SpriteBatch batch) {
         batch.draw(image, x, y, image.getWidth() * scale, image.getHeight() * scale);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, getWidth() * scale, getHeight() * scale);
     }
 
     public void dispose() {
