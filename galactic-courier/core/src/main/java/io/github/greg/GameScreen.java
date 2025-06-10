@@ -2,6 +2,7 @@ package io.github.greg;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -18,6 +19,8 @@ public class GameScreen {
     private float screenWidth;
     private float screenHeight;
 
+    private OrthographicCamera camera;
+
     public GameScreen() {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
@@ -25,7 +28,11 @@ public class GameScreen {
 
         batch = new SpriteBatch();
 
-        ship = new Ship("cohete_off.png", screenWidth, screenHeight, scale, ShipState.NO_LOAD);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, screenWidth, screenHeight);
+
+        ship = new Ship("cohete_off.png", screenWidth, screenHeight, scale, ShipState.NO_LOAD, camera);
+        ship.touchMovimentShip();
         ship.setX((screenWidth - ship.getWidth() * scale) / 2);
         ship.setY((screenHeight - ship.getHeight() * scale) / 2);
 
@@ -67,13 +74,17 @@ public class GameScreen {
     }
 
     public void render() {
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+
         batch.begin();
-        ship.render(batch);
 
         for (SpaceStations station : stations) {
             station.render(batch);
         }
+
+        ship.render(batch);
 
         batch.end();
     }
