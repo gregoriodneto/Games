@@ -31,26 +31,14 @@ public class GameScreen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, screenWidth, screenHeight);
 
-        ship = new Ship("cohete_off.png", screenWidth, screenHeight, scale, ShipState.NO_LOAD, camera);
+        ship = new Ship("cohete_off.png", screenWidth, screenHeight, scale, false, ShipState.NO_LOAD, camera);
         ship.touchMovimentShip();
         ship.setX((screenWidth - ship.getWidth() * scale) / 2);
         ship.setY((screenHeight - ship.getHeight() * scale) / 2);
 
         stations = new ArrayList<>();
 
-        createStations(2, 2.5f);
-    }
-
-    private void createStations(int quantity, float scale) {
-        for (int i = 0; i < quantity; i++) {
-            float stationWidth = new Texture("icon_teleporter.png").getWidth() * scale;
-            float stationHeight = new Texture("icon_teleporter.png").getHeight() * scale;
-
-            float x = MathUtils.random(0, screenWidth - stationWidth);
-            float y = MathUtils.random(0, screenHeight - stationHeight);
-
-            stations.add(new SpaceStations("icon_teleporter.png", x, y, scale));
-        }
+        Factory.createStations(1, 2.5f, screenWidth, screenHeight, stations);
     }
 
     public void update(float delta) {

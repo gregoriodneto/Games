@@ -13,8 +13,8 @@ public class Ship extends Base {
     private int points = 0;
     private OrthographicCamera camera;
 
-    public Ship(String imagePath, float x, float y, float scale, ShipState state, OrthographicCamera camera) {
-        super(imagePath, x, y, scale);
+    public Ship(String imagePath, float x, float y, float scale, boolean isSpriteSheet, ShipState state, OrthographicCamera camera) {
+        super(imagePath, x, y, scale, isSpriteSheet);
         this.state = state;
         this.camera = camera;
     }
