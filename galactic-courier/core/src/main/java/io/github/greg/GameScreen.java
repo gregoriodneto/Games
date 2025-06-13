@@ -15,6 +15,7 @@ public class GameScreen {
     private SpriteBatch batch;
     private Ship ship;
     private List<SpaceStations> stations;
+    private Asteroid asteroid;
 
     private float screenWidth;
     private float screenHeight;
@@ -38,11 +39,21 @@ public class GameScreen {
 
         stations = new ArrayList<>();
 
+        scale = 0.2f;
+        asteroid = new Asteroid("asteroids-2x.png", screenWidth, screenHeight, scale, true);
+        asteroid.spriteSheetRender(3, 2);
+        float asteroidWidthRandomPosition = MathUtils.random(0, screenWidth - asteroid.getWidth());
+        asteroid.setX(asteroidWidthRandomPosition);
+        asteroid.setY(screenHeight + 50);
+
         Factory.createStations(1, 2.5f, screenWidth, screenHeight, stations);
     }
 
     public void update(float delta) {
         ship.update(delta);
+        asteroid.update(delta);
+        float speed = 100f;
+        asteroid.setY(asteroid.getY() - speed * delta);
         for (SpaceStations station : stations) {
             station.update(delta);
 
@@ -72,6 +83,7 @@ public class GameScreen {
             station.render(batch);
         }
 
+        asteroid.render(batch);
         ship.render(batch);
 
         batch.end();
@@ -80,6 +92,7 @@ public class GameScreen {
     public void dispose() {
         batch.dispose();
         ship.dispose();
+        asteroid.dispose();
 
         for (SpaceStations station : stations) {
             station.dispose();
